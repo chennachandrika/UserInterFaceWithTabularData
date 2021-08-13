@@ -13,7 +13,7 @@ import {
   Submit
 } from "./styledComponents";
 
-const defaultTabularEntries = 20;
+const defaultTabularEntries = 5;
 const defaultColumnTypes = ["Date", "Number", "Multiselect"];
 
 class UserInterface extends Component {
@@ -28,7 +28,7 @@ class UserInterface extends Component {
   };
   setDefaultData = () => {
     const { dataEntriesInfo } = this.state;
-    const defaultData = Array(24).fill(0);
+    const defaultData = Array(defaultTabularEntries).fill(0);
     const defaultTableData = defaultData.map((data) => ({
       id: uuid(),
       columnName: "",
@@ -54,13 +54,13 @@ class UserInterface extends Component {
     const { dataEntriesInfo, columnName, columnType, columnData } = this.state;
     this.setState({
       dataEntriesInfo: [
-        ...dataEntriesInfo,
         {
           id: uuid(),
           columnName,
           columnType,
           columnData
-        }
+        },
+        ...dataEntriesInfo
       ]
     });
   };
@@ -113,7 +113,7 @@ class UserInterface extends Component {
     const { columnType } = this.state;
     return (
       <InputContianer>
-        <InputLabel htmlFor="column type">Column Name</InputLabel>
+        <InputLabel htmlFor="column type">Column Type</InputLabel>
         <SelectorItem
           id="column type"
           value={columnType}
