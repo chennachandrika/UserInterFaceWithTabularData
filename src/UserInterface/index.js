@@ -24,7 +24,20 @@ class UserInterface extends Component {
     columnData: ""
   };
   componentDidMount = () => {
-    console.log(defaultTabularEntries);
+    this.setDefaultData();
+  };
+  setDefaultData = () => {
+    const { dataEntriesInfo } = this.state;
+    const defaultData = Array(24).fill(0);
+    const defaultTableData = defaultData.map((data) => ({
+      id: uuid(),
+      columnName: "",
+      columnType: "",
+      columnData: ""
+    }));
+    this.setState({
+      dataEntriesInfo: [...dataEntriesInfo, ...defaultTableData]
+    });
   };
   onChangeColumnName = (event) => {
     this.setState({ columnName: event.target.value });
@@ -39,22 +52,17 @@ class UserInterface extends Component {
   onSubmitData = (event) => {
     event.preventDefault();
     const { dataEntriesInfo, columnName, columnType, columnData } = this.state;
-    this.setState(
-      {
-        dataEntriesInfo: [
-          ...dataEntriesInfo,
-          {
-            id: uuid(),
-            columnName,
-            columnType,
-            columnData
-          }
-        ]
-      },
-      () => {
-        console.log(dataEntriesInfo);
-      }
-    );
+    this.setState({
+      dataEntriesInfo: [
+        ...dataEntriesInfo,
+        {
+          id: uuid(),
+          columnName,
+          columnType,
+          columnData
+        }
+      ]
+    });
   };
 
   renderRelatedInput = () => {
@@ -136,6 +144,7 @@ class UserInterface extends Component {
 
   render() {
     const { dataEntriesInfo } = this.state;
+    console.log(dataEntriesInfo);
     return (
       <UserInterfaceContainer>
         <UserInterfaceHeading>

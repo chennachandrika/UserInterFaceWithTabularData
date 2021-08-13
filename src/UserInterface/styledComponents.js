@@ -4,8 +4,7 @@ export const UserInterfaceContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  justify-content: flex-start;
   padding: 10%;
   height: 100%;
 `;

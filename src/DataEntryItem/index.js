@@ -1,10 +1,34 @@
 import { Component } from "react";
-import { InputField } from "./styledComponents";
+import {
+  InputField,
+  SelectorItem,
+  Option,
+  DataEntryRow,
+  DataTableCell
+} from "./styledComponents";
 
 const defaultColumnTypes = ["Date", "Number", "Multiselect"];
 
 class DataEntryItem extends Component {
-  state = { isActive: false, columnName: "", columnType: "", columnData: "" };
+  constructor() {
+    super();
+    this.state = {
+      isActive: false,
+      columnName: "",
+      columnType: "",
+      columnData: ""
+    };
+  }
+  componentDidMount = () => {
+    this.setRowData();
+  };
+
+  setRowData = () => {
+    const { rowData } = this.props;
+    const { columnName, columnType, columnData } = rowData;
+    this.setState({ columnName, columnType, columnData });
+  };
+
   onChangeColumnName = (event) => {
     this.setState({ columnName: event.target.value });
   };
@@ -13,6 +37,36 @@ class DataEntryItem extends Component {
   };
   onChangeColumnData = (event) => {
     this.setState({ columnData: event.target.value });
+  };
+
+  renderColumnNameInput = () => {
+    const { columnName } = this.state;
+    return (
+      <InputField
+        id="column name"
+        type="text"
+        placeholder="Enter Column Name"
+        onChange={this.onChangeColumnName}
+        value={columnName}
+      />
+    );
+  };
+  renderColumnTypeDropDown = () => {
+    const { columnType } = this.state;
+    return (
+      <SelectorItem
+        id="column type"
+        value={columnType}
+        onChange={this.onChangeColumnType}
+      >
+        <Option>Select Column Type</Option>
+        {defaultColumnTypes.map((dataType) => (
+          <Option value={dataType.toLowerCase()} key={dataType.toLowerCase()}>
+            {dataType}
+          </Option>
+        ))}
+      </SelectorItem>
+    );
   };
 
   renderRelatedInput = () => {
@@ -26,7 +80,7 @@ class DataEntryItem extends Component {
         case "multiselect":
           return "text";
         default:
-          return "";
+          return "text";
       }
     };
     return (
@@ -41,7 +95,13 @@ class DataEntryItem extends Component {
   };
 
   render() {
-    return <p>Hi</p>;
+    return (
+      <DataEntryRow>
+        <DataTableCell>{this.renderColumnNameInput()}</DataTableCell>
+        <DataTableCell>{this.renderColumnTypeDropDown()}</DataTableCell>
+        <DataTableCell>{this.renderRelatedInput()}</DataTableCell>
+      </DataEntryRow>
+    );
   }
 }
 
