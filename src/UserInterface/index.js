@@ -1,5 +1,6 @@
 import { Component } from "react";
 import uuid from "react-uuid";
+import DataEntriesTable from "../DataEntriesTable";
 import {
   UserInterfaceContainer,
   UserInterfaceHeading,
@@ -110,6 +111,7 @@ class UserInterface extends Component {
           value={columnType}
           onChange={this.onChangeColumnType}
         >
+          <Option>Select Column Type</Option>
           {defaultColumnTypes.map((dataType) => (
             <Option value={dataType.toLowerCase()} key={dataType.toLowerCase()}>
               {dataType}
@@ -131,13 +133,16 @@ class UserInterface extends Component {
       </ColumnCreationForm>
     );
   };
+
   render() {
+    const { dataEntriesInfo } = this.state;
     return (
       <UserInterfaceContainer>
         <UserInterfaceHeading>
           User Interface with Tabular Data
         </UserInterfaceHeading>
         {this.renderColumnCreationForm()}
+        <DataEntriesTable dataEntriesInfo={dataEntriesInfo} />
       </UserInterfaceContainer>
     );
   }
